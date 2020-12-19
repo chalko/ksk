@@ -6,4 +6,5 @@ key=$1
 
 echo ${key}
 tar -acf ${key}.tar.gz ~/.gnupg/${key}/*
-gpg --comment "${key}.tar.gz " --enarmor <${key}.tar.gz > ${key}.tar.gz.asc
+~/src/key-backup/enarmor.sh "${key}.tar.gz"
+
