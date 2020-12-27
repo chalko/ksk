@@ -37,6 +37,7 @@ You will need 4 separate passphrases
 ### Transfer drive
 
 * FAT partition "KSK"
+* FAT partition "PUB"  
 * xfer-secure
   *LUKS ext4
 
@@ -126,76 +127,95 @@ gpg --quick-add-key $KSK_FINGERPRINT rsa auth
 Export ksk
 
 ```
-gpg --armor --export-secret-keys $KSK_ID > $KSK_ID.private.gpg-key
-gpg --armor --export $KSK_ID > ~$KSK_ID.public.gpg-key
-
+rm -rf ~/ksk-secure
+mkdir ~/ksk-secure
+gpg --armor --export $KSK_ID > ~/ksk-secure/$KSK_FINGERPRINT.public.gpg-key
+gpg --armor --export-secret-keys $KSK_ID > ~/ksk-secure/$KSK_ID.private.gpg-key
+gpg --export-secret-subkeys --armor  $KSK_ID > ~/ksk-secure/$KSK_ID.sub_priv.gpg-key
+gpg --export-ownertrust > ~/ksk-secure/ownertrust.txt
 ```
 
 copy to USB
 
-```
-cp ${KSK_FINGERPRINT}.rev $USB/ksk-secure/${KSK_FINGERPRINT}.rev 
-cp $KSK_ID.private.gpg-key $USB/ksk-secure/$KSK_ID.private.gpg-key
-cp ~/KSK/$KSK_ID.public.gpg-key $USB/ksk-secure/$KSK_ID.public.gpg-key
-cp ~/KSK/* $USB/KSK/
+```shell
+cp ~/ksk-secure/* $USB/ksk-secure/
 ```
 
 eject USB and copy other USBs
 
+Clean up
+
+```shell
+rm -rf  ~/ksk-secure/
+```
+
+
+
 
 # Export Secondary keys
+Insert a KSK drive
 
 First import the primary
-TODO
 
+```
+gpg --import $USB/ksk-secure/$KSK_ID.public.gpg-key
+gpg --import $USB/ksk-secure/$KSK_ID.private.gpg-key
+gpg --import $USB/ksk-secure/$KSK_ID.sub_priv.gpg-key
+gpg --import-ownertrust $USB/ksk-secure/ownertrust.txt
+
+```
+
+Remove the KSK drive
 
 prep
 ```
 rm -rf gpg-secondary
-rm -rf xfer
-mkdir xfer
+rm -rf ~/xfer-secure
+mkdir ~/xfer-secure
 mkdir gpg-secondary
 chmod 700 gpg-secondary
 
 ```
 
-copy gpg.conf
-
 
 Setup just the secondary with different password
 ```
+gpg --armor --export $KSK_ID > ~/xfer-secure/$KSK_ID.public.gpg-key
 gpg --amror --export-secret-subkeys $KSK_ID > subkeys
+gpg --export-ownertrust > ~/xfer-secure/ownertrust.txt
+gpg --homedir gpg-secondary/ --import ~/xfer-secure/$KSK_ID.public.gpg-key
 gpg --homedir gpg-secondary/ --import subkeys
-gpg --homedir gpg-secondary/ --import ~/KSK/$KSK_ID.public.gpg-key
-gpg --homedir gpg-secondary/ 
+gpg --homedir gpg-secondary/ --import-ownertrust  ~/xfer-secure/ownertrust.txt
+rm subkeys
+```
 
+change  set the xfer password
+
+```shell
+gpg --change-passphrase $KSK_ID
 ```
 
 extract just the secondary keys
 
 ``` 
-gpg --homedir gpg-secondary/ --armor --export-secret-subkeys $KSK_ID > $KSK_ID.secret-subkeys.gpg-key
+gpg --homedir gpg-secondary/ \
+    --armor --export-secret-subkeys $KSK_ID \
+    > ~/xfer-secure/$KSK_ID.secret-subkeys.gpg-key
 ```
-
 
 copy to the USB
 
 ```
-cp $KSK_ID.secret-subkeys.gpg-key $USB/key-xfer-secure
-cp $KSK_ID.public.gpg-key $USB/key-xfer-secure
-cp KSK/* $USB/key-xfer
-
+cp ~/xfer-secure/* $USB/xfer-secure
 ```
 
+cleanup
 
-
-
-
-
+```shell
+rm -rf ~/xfer-secure/
+```
 
 # Desired
 
 git
 paperkey
-
-
