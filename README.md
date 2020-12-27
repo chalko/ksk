@@ -127,17 +127,20 @@ Export ksk
 
 ```
 rm -rf ~/ksk-secure
-mkdir ~/ksk-secure
+git clone $USB/ksk-secure/.git ~/ksk-secure
 gpg --armor --export $KSK_ID > ~/ksk-secure/$KSK_FINGERPRINT.public.gpg-key
 gpg --armor --export-secret-keys $KSK_ID > ~/ksk-secure/$KSK_ID.private.gpg-key
 gpg --export-secret-subkeys --armor  $KSK_ID > ~/ksk-secure/$KSK_ID.sub_priv.gpg-key
 gpg --export-ownertrust > ~/ksk-secure/ownertrust.txt
+
+git -C ~/ksk-secure/ commit -a
 ```
 
 copy to USB
 
 ```shell
-cp ~/ksk-secure/* $USB/ksk-secure/
+git -C  $USB/ksk-secure/ pull ~/ksk-secure/.git
+
 ```
 
 eject USB and copy other USBs
