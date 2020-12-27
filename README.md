@@ -228,6 +228,17 @@ git -C  $USB/ksk/ pull ~/ksk/.git
 ```
 
 
+
+# Import from transfer USB
+
+
+```
+gpg --import $USB/xfer-secure/$KSK_ID.public.gpg-key
+gpg --import $USB/xfer-secure/$KSK_ID.secret-subkeys.gpg-key
+gpg --import-ownertrust $USB/xfer-secure/ownertrust.txt
+
+```
+
 # Desired
 
 git
