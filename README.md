@@ -171,9 +171,9 @@ Remove the KSK drive
 
 prep
 ```
-rm -rf gpg-secondary
 rm -rf ~/xfer-secure
-mkdir ~/xfer-secure
+git -C  $USB/xfer-secure/ clone ~/xfer-secure
+rm -rf ~/gpg-secondary
 mkdir gpg-secondary
 chmod 700 gpg-secondary
 
@@ -184,7 +184,7 @@ Setup just the secondary with different password
 ```
 gpg --armor --export $KSK_ID > ~/xfer-secure/$KSK_ID.public.gpg-key
 gpg --armor --export $KSK_ID > ~/ksk/$KSK_ID.public.gpg-key
-gpg --amror --export-secret-subkeys $KSK_ID > subkeys
+gpg --armor --export-secret-subkeys $KSK_ID > subkeys
 gpg --export-ownertrust > ~/xfer-secure/ownertrust.txt
 gpg --homedir gpg-secondary/ --import ~/xfer-secure/$KSK_ID.public.gpg-key
 gpg --homedir gpg-secondary/ --import subkeys
@@ -195,7 +195,7 @@ rm subkeys
 change  set the xfer password
 
 ```shell
-gpg --change-passphrase $KSK_ID
+gpg --homedir gpg-secondary/ --change-passphrase $KSK_ID
 ```
 
 extract just the secondary keys
@@ -209,7 +209,8 @@ gpg --homedir gpg-secondary/ \
 copy to the USB
 
 ```
-cp ~/xfer-secure/* $USB/xfer-secure
+git -C  $USB/xfer-secure/ pull ~/xfer-secure/.git
+git -C  $USB/ksk/ pull ~/ksk/.git
 ```
 
 cleanup
