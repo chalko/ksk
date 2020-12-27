@@ -64,7 +64,7 @@ WARN:This must be done from a airgapped system with a reliable OS
 Delete stuff
 
 ```
-rm -rf ~/.gnupg $USB/ksk-secure/* ~/gpg-secondary ~/KSK
+rm -rf ~/.gnupg ~/gpg-secondary
 ```
 
 Create neeed dirs
@@ -74,7 +74,6 @@ mkdir ~/.gnupg
 chmod 700 ~/.gnupg
 mkdir ~/gpg-secondary
 chmod 700 ~/gpg-secondary
-mkdir ~/KSK
 ```
 
 Copy KSK setup from clear disk
