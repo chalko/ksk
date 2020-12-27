@@ -140,7 +140,6 @@ copy to USB
 
 ```shell
 git -C  $USB/ksk-secure/ pull ~/ksk-secure/.git
-
 ```
 
 eject USB and copy other USBs
@@ -216,6 +215,15 @@ cleanup
 ```shell
 rm -rf ~/xfer-secure/
 ```
+
+
+# update KSK
+
+```shell
+git -C  $USB/ksk/ pull ~/ksk/.git
+
+```
+
 
 # Desired
 
