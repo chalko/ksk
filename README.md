@@ -128,7 +128,7 @@ Export ksk
 ```
 rm -rf ~/ksk-secure
 git clone $USB/ksk-secure/.git ~/ksk-secure
-gpg --armor --export $KSK_ID > ~/ksk-secure/$KSK_FINGERPRINT.public.gpg-key
+gpg --armor --export $KSK_ID > ~/ksk-secure/$KSK_ID.public.gpg-key
 gpg --armor --export-secret-keys $KSK_ID > ~/ksk-secure/$KSK_ID.private.gpg-key
 gpg --export-secret-subkeys --armor  $KSK_ID > ~/ksk-secure/$KSK_ID.sub_priv.gpg-key
 gpg --export-ownertrust > ~/ksk-secure/ownertrust.txt
@@ -140,6 +140,7 @@ copy to USB
 
 ```shell
 git -C  $USB/ksk-secure/ pull ~/ksk-secure/.git
+git -C  $USB/ksk/ pull ~/ksk/.git
 ```
 
 eject USB and copy other USBs
@@ -182,6 +183,7 @@ chmod 700 gpg-secondary
 Setup just the secondary with different password
 ```
 gpg --armor --export $KSK_ID > ~/xfer-secure/$KSK_ID.public.gpg-key
+gpg --armor --export $KSK_ID > ~/ksk/$KSK_ID.public.gpg-key
 gpg --amror --export-secret-subkeys $KSK_ID > subkeys
 gpg --export-ownertrust > ~/xfer-secure/ownertrust.txt
 gpg --homedir gpg-secondary/ --import ~/xfer-secure/$KSK_ID.public.gpg-key
