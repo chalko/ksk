@@ -62,8 +62,15 @@ Then on the airgapped system run
 /media/$USER/KSK/install-ksk.sh
 ```
 
+### Create Primary Keys
+This only needs to be done once.
 
+Insert the KSK USB and decrypt the secure partition. 
 
+```shell
+~/ksk/init-ksk.sh
+
+```
 
 
 
@@ -95,7 +102,7 @@ Delete stuff
 rm -rf ~/.gnupg ~/gpg-secondary
 ```
 
-Create neeed dirs
+Create needed dirs
 
 ``` 
 mkdir ~/.gnupg 
