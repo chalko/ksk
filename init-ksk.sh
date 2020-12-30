@@ -39,6 +39,20 @@ EOL
 cp ~/gpg-primary/openpgp-revocs.d/${KSK_FGPR}.rev \
   ~/ksk-secure/${KSK_FGPR}.rev
 
+# Create subkeys
 gpg --homedir ~/gpg-primary --quick-add-key $KSK_FGPR default sign
 gpg --homedir ~/gpg-primary --quick-add-key $KSK_FGPR default auth
 
+
+# Export primary
+
+gpg --homedir ~/gpg-primary --armor --export $KSK_ID > ~/ksk-secure/0x$KSK_ID.public.gpg-key
+gpg --homedir ~/gpg-primary --armor --export-secret-keys $KSK_ID > ~/ksk-secure/0x$KSK_ID.private.gpg-key
+gpg --homedir ~/gpg-primary --export-secret-subkeys --armor  $KSK_ID > ~/ksk-secure/0x$KSK_ID.sub_priv.gpg-key
+gpg --homedir ~/gpg-primary --export-ownertrust > ~/ksk-secure/ownertrust.txt
+
+cd  ~/ksk-secure
+git init
+git add *
+git commit -a -m"Initial creation for primary keys for ${NAME} <${EMAIL}>"
+cd ${CWD}
