@@ -47,8 +47,9 @@ gpg --homedir ~/gpg-secondary/ \
 
 
 cp ~/ksk-secure/$KSK_ID.public.gpg-key ~/secondary-secure
+cp ~/ksk-secure/ksk.conf ~/secondary-secure
 cp ~/ksk-secure/ownertrust.txt ~/secondary-secure
-git -C ~/secondary-secure add $KSK_ID.public.gpg-key $KSK_ID.sub-private.gpg-key ownertrust.txt
+git -C ~/secondary-secure add ksk.conf $KSK_ID.public.gpg-key $KSK_ID.sub-private.gpg-key ownertrust.txt
 git -C ~/secondary-secure commit -m"Export of the secondary keys for for ${KSK_NAME} <${KSK_EMAIL}>"
 
 
