@@ -68,7 +68,7 @@ This only needs to be done once.
 Insert the KSK USB and decrypt the secure partition. 
 
 ```shell
-~/ksk/init-ksk.sh
+~/ksk/create-primary-keys.sh
 ```
 
 ### Backup Primary keys
