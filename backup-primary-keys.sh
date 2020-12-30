@@ -16,7 +16,7 @@ fi
 
 cp ~/ksk/restore-primary-keys.sh ~/ksk-secure/
 
-git -C ~/ksk-secure add restore-primary-keys.sh 
+git -C ~/ksk-secure add restore-primary-keys.sh
 git -C ~/ksk-secure commit restore-primary-keys.sh -m"Copy latest version of restore script"
 
 if [ ! -d ${TARGET} ]; then

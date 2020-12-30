@@ -78,7 +78,11 @@ It must be done on an airgapped system
 
 
 
-### Import Primary Keys
+### Restore Primary Keys
+
+```shell
+/media/$USER/primary-keys-secure/restore-primary-keys.sh
+```
 
 ### Backup Secondary keys
 

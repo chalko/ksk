@@ -24,6 +24,7 @@ export KSK_EMAIL="${EMAIL}"
 EOL
 
 cp ${DIR}/gpg.conf ~/gpg-primary/
+cp ${DIR}/gpg.conf ~/ksk-secure/
 
 gpg --homedir ~/gpg-primary/ \
   --quick-generate-key "${NAME} <${EMAIL}>" default
@@ -48,8 +49,8 @@ gpg --homedir ~/gpg-primary --quick-add-key $KSK_FGPR default auth
 
 gpg --homedir ~/gpg-primary --armor --export $KSK_ID > ~/ksk-secure/0x$KSK_ID.public.gpg-key
 gpg --homedir ~/gpg-primary --armor --export-secret-keys $KSK_ID > ~/ksk-secure/0x$KSK_ID.private.gpg-key
-gpg --homedir ~/gpg-primary --export-secret-subkeys --armor  $KSK_ID > ~/ksk-secure/0x$KSK_ID.sub_priv.gpg-key
 gpg --homedir ~/gpg-primary --export-ownertrust > ~/ksk-secure/ownertrust.txt
+
 
 cd  ~/ksk-secure
 git init
