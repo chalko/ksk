@@ -73,10 +73,8 @@ It must be done on an airgapped system
 ### Backup Primary Keys
 
 ```shell
-~/ksk/backup-primary-keys.sh
+~/ksk/backup-primary-keys.sh /media/$USER/primary-keys-secure
 ```
-
-
 
 ### Restore Primary Keys
 
@@ -84,7 +82,21 @@ It must be done on an airgapped system
 /media/$USER/primary-keys-secure/restore-primary-keys.sh
 ```
 
-### Backup Secondary keys
+
+### Extract Secondary keys
+Extract only the secondary keys and sets a new password
+
+```shell
+~/ksk/extract-secondary-keys.sh 
+```
+
+### Export Secondary keys
+
+Copies the secondary keys USB target
+
+```shell
+~/ksk/export-secondary-keys.sh /media/$USER/secondary-keys-secure
+```
 
 ### Import Secondary Keys
 
