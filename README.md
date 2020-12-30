@@ -90,17 +90,19 @@ Extract only the secondary keys and sets a new password
 ~/ksk/extract-secondary-keys.sh 
 ```
 
-### Export Secondary keys
+### Backup Secondary keys
 
 Copies the secondary keys USB target
 
 ```shell
-~/ksk/export-secondary-keys.sh /media/$USER/secondary-keys-secure
+~/ksk/backup-secondary-keys.sh /media/$USER/secondary-keys-secure
 ```
 
 ### Import Secondary Keys
 
-
+```shell
+/media/$USER/secondary-keys-secure/import-secondary-keys.sh
+```
 
 
 ## Manual Process
