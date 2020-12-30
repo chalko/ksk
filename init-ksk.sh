@@ -15,8 +15,8 @@ mkdir ~/ksk-secure
 chmod 700 ~/ksk-secure
 
 echo "GnuPG needs to construct a user ID to identify your key."
-read -p "Enter your real name (ex John Smith): " NAME
-read -p "Enter your email address (ex john@smith.com)" EMAIL
+read -e -p "Enter your real name (ex John Smith): " NAME
+read -e -p "Enter your email address (ex john@smith.com)" EMAIL
 
 cat >~/ksk-secure/ksk.conf <<EOL
 export KSK_NAME="${NAME}"
