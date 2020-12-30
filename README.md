@@ -64,8 +64,7 @@ Then on the airgapped system run
 
 ### Create Primary Keys
 This only needs to be done once.
-
-Insert the KSK USB and decrypt the secure partition. 
+It must be done on an airgapped system
 
 ```shell
 ~/ksk/create-primary-keys.sh
