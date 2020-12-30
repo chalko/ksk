@@ -70,7 +70,13 @@ It must be done on an airgapped system
 ~/ksk/create-primary-keys.sh
 ```
 
-### Backup Primary keys
+### Backup Primary Keys
+
+```shell
+~/ksk/backup-primary-keys.sh
+```
+
+
 
 ### Import Primary Keys
 
