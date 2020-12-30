@@ -13,7 +13,7 @@ Secondary:
 
 Airgap linux system
 
-* uUbuntu 20 live disk
+* Ubuntu 20 live disk
 
 
 ## Passphrases
@@ -37,11 +37,39 @@ You will need 4 separate passphrases
 ### Transfer drive
 
 * FAT partition "KSK"
-* FAT partition "PUB"  
 * xfer-secure
   *LUKS ext4
 
-# Processes
+
+## Scripted process
+
+### Install KSK
+
+On an internet connected host clone ksk source in to ~/ksk
+
+``` 
+git clone https://github.com/chalko/ksk.git ~/ksk
+```
+
+To install on an airgapped system clone source into an unencrypted partition of the xfer USB
+``` 
+git clone https://github.com/chalko/ksk.git /media/$USER/KSK
+```
+
+Then on the airgapped system run
+
+``` 
+/media/$USER/KSK/install-ksk.sh
+```
+
+
+
+
+
+
+
+
+# Manual Process
 
 ## Usefull aliases for 
 
