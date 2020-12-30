@@ -41,7 +41,7 @@ gpg --homedir ~/gpg-secondary/ --import-ownertrust  ~/ksk-secure/ownertrust.txt
 
 gpg --homedir ~/gpg-secondary/ --change-passphrase $KSK_ID
 
-gpg --homedir gpg-secondary/ \
+gpg --homedir ~/gpg-secondary/ \
     --armor --export-secret-subkeys $KSK_ID \
     > ~/secondary-secure/$KSK_ID.sub-private.gpg-key
 
