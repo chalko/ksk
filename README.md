@@ -38,7 +38,7 @@ You will need 4 separate passphrases
 
 * FAT partition "KSK"
 * xfer-secure
-  *LUKS ext4
+  * LUKS ext4
 
 
 ## Scripted process
@@ -51,7 +51,9 @@ On an internet connected host clone ksk source in to ~/ksk
 git clone https://github.com/chalko/ksk.git ~/ksk
 ```
 
-To install on an airgapped system clone source into an unencrypted partition of the xfer USB
+To install on an airgapped system clone source into an unencrypted partition
+of the xfer USB
+
 ``` 
 git clone https://github.com/chalko/ksk.git /media/$USER/KSK
 ```
@@ -121,7 +123,7 @@ export USB=/media/ubuntu
 
 ### Create Primary
 
-WARN:This must be done from a airgapped system with a reliable OS
+WARN:This must be done from an airgapped system with a reliable OS
 
 * insert KSK drive
 
@@ -305,5 +307,5 @@ gpg --import-ownertrust $USB/xfer-secure/ownertrust.txt
 
 ## Desired
 
-git
-paperkey
+* git
+* paperkey
