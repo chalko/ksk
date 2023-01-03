@@ -19,7 +19,7 @@ cp ~/ksk/import-secondary-keys.sh ~/secondary-secure/
 git -C ~/secondary-secure add import-secondary-keys.sh
 git -C ~/secondary-secure commit import-secondary-keys.sh -m"Copy latest version of import script"
 
-if [ ! -d ${TARGET} ]; then
+if [ ! -d ${TARGET}/.git/ ]; then
   mkdir -p ${TARGET}
   git clone ~/secondary-secure/.git/ ${TARGET}
 fi
