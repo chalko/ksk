@@ -1,6 +1,9 @@
 # Key Singing Key 
 
 
+TODO: Update all skripts to use /dev/shm/ksk_work for KSK_WORKDIR
+TODO: formalize ksk.conf
+
 ## Terminology
 
 KSK:
