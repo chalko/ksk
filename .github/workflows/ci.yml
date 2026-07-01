@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Run CI Tests in Raspbian (arm32v7/debian:stretch)
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/ksk \
+            -w /ksk \
+            -e KSK_NAME="Test User" \
+            -e KSK_EMAIL="test@example.com" \
+            -e KSK_PASSPHRASE="testphrase" \
+            arm32v7/debian:stretch bash /ksk/test-ci.sh

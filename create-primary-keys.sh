@@ -14,9 +14,16 @@ rm -rf ~/ksk-secure
 mkdir ~/ksk-secure
 chmod 700 ~/ksk-secure
 
-echo "GnuPG needs to construct a user ID to identify your key."
-read -e -p "Enter your real name (ex John Smith): " NAME
-read -e -p "Enter your email address (ex john@smith.com)" EMAIL
+if [ -z "$KSK_NAME" ] || [ -z "$KSK_EMAIL" ]; then
+  echo "GnuPG needs to construct a user ID to identify your key."
+  read -e -p "Enter your real name (ex John Smith): " NAME
+  read -e -p "Enter your email address (ex john@smith.com)" EMAIL
+else
+  NAME="$KSK_NAME"
+  EMAIL="$KSK_EMAIL"
+  echo "Using KSK_NAME: $NAME"
+  echo "Using KSK_EMAIL: $EMAIL"
+fi
 
 cat >~/ksk-secure/ksk.conf <<EOL
 export KSK_NAME="${NAME}"
@@ -26,7 +33,13 @@ EOL
 cp ${DIR}/gpg.conf ~/gpg-primary/
 cp ${DIR}/gpg.conf ~/ksk-secure/
 
-gpg --homedir ~/gpg-primary/ \
+if [ -n "$KSK_PASSPHRASE" ]; then
+  GPG_OPTS="--batch --passphrase $KSK_PASSPHRASE --pinentry-mode loopback"
+else
+  GPG_OPTS=""
+fi
+
+gpg --homedir ~/gpg-primary/ $GPG_OPTS \
   --quick-generate-key "${NAME} <${EMAIL}>" default
 
 KSK_ID=$(gpg --homedir ~/gpg-primary --with-colons --list-key "${EMAIL}" | grep -m 1 pub | cut -d: -f 5)
@@ -41,15 +54,15 @@ cp ~/gpg-primary/openpgp-revocs.d/${KSK_FGPR}.rev \
   ~/ksk-secure/${KSK_FGPR}.rev
 
 # Create subkeys
-gpg --homedir ~/gpg-primary --quick-add-key $KSK_FGPR default sign
-gpg --homedir ~/gpg-primary --quick-add-key $KSK_FGPR default auth
+gpg --homedir ~/gpg-primary $GPG_OPTS --quick-add-key $KSK_FGPR default sign
+gpg --homedir ~/gpg-primary $GPG_OPTS --quick-add-key $KSK_FGPR default auth
 
 
 # Export primary
 
 gpg --homedir ~/gpg-primary --armor --export $KSK_ID > ~/ksk-secure/0x$KSK_ID.public.gpg-key
-gpg --homedir ~/gpg-primary --armor --export-secret-keys $KSK_ID > ~/ksk-secure/0x$KSK_ID.private.gpg-key
-gpg --homedir ~/gpg-primary --armor --export-secret-subkeys $KSK_ID > ~/ksk-secure/0x$KSK_ID.sub-private.gpg-key
+gpg --homedir ~/gpg-primary $GPG_OPTS --armor --export-secret-keys $KSK_ID > ~/ksk-secure/0x$KSK_ID.private.gpg-key
+gpg --homedir ~/gpg-primary $GPG_OPTS --armor --export-secret-subkeys $KSK_ID > ~/ksk-secure/0x$KSK_ID.sub-private.gpg-key
 gpg --homedir ~/gpg-primary --export-ownertrust > ~/ksk-secure/ownertrust.txt
 
 
