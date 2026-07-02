@@ -37,6 +37,8 @@ git -C ${KSK_WORKDIR}/secondary-secure commit import-secondary-keys.sh -m"Copy l
 
 if [ -n "$KSK_PASSPHRASE" ]; then
   GPG_OPTS="--batch --passphrase $KSK_PASSPHRASE --pinentry-mode loopback"
+  echo "allow-loopback-pinentry" >> ${KSK_WORKDIR}/gpg-secondary/gpg-agent.conf
+  gpgconf --homedir ${KSK_WORKDIR}/gpg-secondary/ --kill gpg-agent || true
 else
   GPG_OPTS=""
 fi

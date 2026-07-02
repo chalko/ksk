@@ -35,6 +35,8 @@ cp ${DIR}/gpg.conf ~/ksk-secure/
 
 if [ -n "$KSK_PASSPHRASE" ]; then
   GPG_OPTS="--batch --passphrase $KSK_PASSPHRASE --pinentry-mode loopback"
+  echo "allow-loopback-pinentry" >> ~/gpg-primary/gpg-agent.conf
+  gpgconf --homedir ~/gpg-primary/ --kill gpg-agent || true
 else
   GPG_OPTS=""
 fi
