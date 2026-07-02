@@ -2,8 +2,12 @@
 set -e
 
 echo "Installing prerequisites..."
-apt-get update
-apt-get install -y gnupg git
+# Debian stretch is archived, update sources.list
+echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
+echo "deb http://archive.debian.org/debian-security stretch/updates main" >> /etc/apt/sources.list
+# Disable Check-Valid-Until because archive signatures are expired
+apt-get -o Acquire::Check-Valid-Until=false --allow-unauthenticated update || true
+apt-get install -y --allow-unauthenticated gnupg git
 
 echo "Setting up KSK_WORKDIR"
 export KSK_WORKDIR=/dev/shm/ksk_work
