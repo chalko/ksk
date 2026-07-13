@@ -19,6 +19,7 @@ jobs:
       - name: Run CI Tests in Raspbian (arm32v7/debian:stretch)
         run: |
           chmod +x test-ci.sh
+          chmod +x create-primary-keys.sh extract-secondary-keys.sh backup-primary-keys.sh backup-secondary-keys.sh import-secondary-keys.sh install-ksk.sh restore-primary-keys.sh update-primary-keys.sh sync-ksk.sh export-primary-keys.sh
           docker run --rm \
             -v ${{ github.workspace }}:/ksk \
             -w /ksk \
